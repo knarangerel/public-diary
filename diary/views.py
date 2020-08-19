@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .models import Diary
+from .serializers import DiarySerializer
 
-# Create your views here.
+
+class DiaryListCreate(generics.ListCreateAPIView):
+    queryset = Diary.objects.all()
+    serializer_class = DiarySerializer
