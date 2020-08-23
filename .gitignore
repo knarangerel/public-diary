@@ -1,1 +1,7 @@
 secrets.py
+node_modules/**/*
+__pycache__/**/*
+.vscode
+.env
+yarn-error.log
+.DS_Store
