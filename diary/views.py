@@ -3,6 +3,12 @@ from .models import Diary
 from .serializers import DiarySerializer
 
 
-class DiaryListCreate(generics.ListCreateAPIView):
+class DiaryView(generics.ListCreateAPIView):
+    queryset = Diary.objects.all()
+    serializer_class = DiarySerializer
+
+
+class SingleDiaryView(generics.RetrieveUpdateDestroyAPIView):
+    lookup_field = 'date'
     queryset = Diary.objects.all()
     serializer_class = DiarySerializer
