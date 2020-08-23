@@ -9,7 +9,7 @@ class DiarySerializer(serializers.ModelSerializer):
         fields = ('date', 'in_couple_words', 'rating', 'descriptors')
 
     def create(self, validated_data):
-        diary, created = Diary.objects.update_or_create(
+        diary, _ = Diary.objects.update_or_create(
             date=date.today(),
             defaults={'in_couple_words': validated_data.get('in_couple_words', None),
                       'rating': validated_data.get('rating', None),
