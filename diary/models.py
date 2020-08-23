@@ -12,10 +12,10 @@ def default_descriptors():
 
 class Diary(models.Model):
     date = models.DateField(auto_now_add=True, primary_key=True)
-    in_couple_words = models.CharField(max_length=300)
+    caption = models.CharField(max_length=300)
     rating = models.DecimalField(max_digits=2, decimal_places=0,
                                  validators=[MaxValueValidator(10), MinValueValidator(1)])
-    descriptors = models.JSONField(default=default_descriptors)
+    adjectives = models.JSONField(default=default_descriptors)
 
     def __str__(self):
         return str(self.date)

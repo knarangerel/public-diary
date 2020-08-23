@@ -6,12 +6,12 @@ from .models import Diary
 class DiarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Diary
-        fields = ('date', 'in_couple_words', 'rating', 'descriptors')
+        fields = ('date', 'caption', 'rating', 'adjectives')
 
     def create(self, validated_data):
         diary, _ = Diary.objects.update_or_create(
             date=date.today(),
-            defaults={'in_couple_words': validated_data.get('in_couple_words', None),
+            defaults={'caption': validated_data.get('caption', None),
                       'rating': validated_data.get('rating', None),
-                      'descriptors': validated_data.get('descriptors', None)})
+                      'adjectives': validated_data.get('adjectives', None)})
         return diary
