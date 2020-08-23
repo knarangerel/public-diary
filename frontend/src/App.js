@@ -28,14 +28,14 @@ class App extends Component {
             loaded: true
           };
         });
-        console.log(data[0])
+        console.log(data[0].descriptors)
       });
   }
 
   render() {
     return (
       <div>
-      <h3>{this.state.diary.date} - {this.state.diary.in_couple_words}</h3>
+      <h3>{this.state.diary.date} - {this.state.diary.caption} - {this.state.diary.adjectives}</h3>
       </div>
     );
   }
