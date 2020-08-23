@@ -5,14 +5,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      diary: {},
       loaded: false,
       placeholder: "Loading"
     };
   }
 
   componentDidMount() {
-    fetch("api/lead")
+    fetch("today/")
       .then(response => {
         if (response.status > 400) {
           return this.setState(() => {
@@ -24,24 +24,19 @@ class App extends Component {
       .then(data => {
         this.setState(() => {
           return {
-            data,
+            diary: data[0],
             loaded: true
           };
         });
+        console.log(data[0])
       });
   }
 
   render() {
     return (
-      <ul>
-        {this.state.data.map(contact => {
-          return (
-            <li key={contact.id}>
-              {contact.name} - {contact.email}
-            </li>
-          );
-        })}
-      </ul>
+      <div>
+      <h3>{this.state.diary.date} - {this.state.diary.in_couple_words}</h3>
+      </div>
     );
   }
 }
