@@ -3,97 +3,161 @@ import { render } from "react-dom";
 
 const styles = {
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
   },
-  entryContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  innerContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    padding: 10,
-  },
-  infoText: {
-    fontFamily: 'sans-serif',
+  titleText: {
+    fontFamily: "sans-serif",
     fontSize: 20,
     margin: 50,
   },
-  text: {
-    fontFamily: 'sans-serif',
+  descriptionText: {
+    fontFamily: "sans-serif",
     fontSize: 18,
     padding: 15,
     margin: 0,
+    // backgroundColor: "yellow",
+  },
+  entryText: {
+    fontFamily: "sans-serif",
+    fontSize: 18,
+    padding: 15,
+    margin: 0,
+    // backgroundColor: "blue",
+    lineHeight: 1,
   },
   adjText: {
-    fontFamily: 'sans-serif',
+    fontFamily: "sans-serif",
     fontSize: 18,
-    padding: 5,
     paddingLeft: 15,
-    paddingTop: 15,
     margin: 0,
-  }
-}
+    marginTop: 6,
+  },
+};
+
+const EntryDescription = ({ emoji, checkedIn, trueText, falseText }) => {
+  return (
+    <>
+      {checkedIn ? (
+        <p style={styles.descriptionText} role="img">
+          {emoji}
+          {trueText}
+        </p>
+      ) : (
+        <p style={styles.descriptionText} role="img">
+          {emoji}
+          {trueText}
+        </p>
+      )}
+    </>
+  );
+};
 
 function App() {
   const [diary, setDiary] = useState({
-    date: '',
-    caption: '',
+    date: "",
+    caption: "",
     rating: 0,
-    adjectives: []
-  })
-  const [checkedIn, setCheckedIn] = useState(true)
+    adjectives: [],
+  });
+  const [checkedIn, setCheckedIn] = useState(true);
 
   async function fetchDiary() {
     try {
-      let response = await fetch('today/')
+      let response = await fetch("today/");
       if (response.status > 400) {
-        setCheckedIn(false)
-        response = await fetch('lastavailable/')
+        setCheckedIn(false);
+        response = await fetch("lastavailable/");
       }
-      const json = await response.json()
-      setDiary({...json[0]})
-    } catch(err) {
-      console.log(err)
+      const json = await response.json();
+      setDiary({ ...json[0] });
+    } catch (err) {
+      console.log(err);
     }
   }
 
-  useEffect(() => { fetchDiary() }, [])
+  useEffect(() => {
+    fetchDiary();
+  }, []);
 
   return (
-  <div style={styles.container}>
-    {checkedIn ? (<p style={styles.infoText}>Thank you for checking in with me!</p>)
-               : (<p style={styles.infoText}>I have not checked in today. Please check back later!</p>)}
-    <div style={styles.entryContainer}>
-      <div style={styles.innerContainer}>
-        {checkedIn ? (<p style={styles.text}>What is the date today? </p>)
-                   : (<p style={styles.text}>The most recent entry is for: </p>)}
-        {checkedIn ? (<p style={styles.text}>How is my day going? </p>)
-                   : (<p style={styles.text}>Caption of the day: </p>)}
-        {checkedIn ? (<p style={styles.text}>If I were to rate my day: </p>)
-                   : (<p style={styles.text}>Rating of the day: </p>)}
-        {checkedIn ? (<p style={styles.text}>How am I feeling? </p>)
-                   : (<p style={styles.text}>Adjectives of the day:</p>)}
-      </div>
-      <div style={styles.innerContainer}>
-        <p style={styles.text}>{diary.date}</p>
-        <p style={styles.text}>{diary.caption}</p>
-        <p style={styles.text}>{diary.rating}/10</p>
-        {/* <div style={{height: 30, backgroundColor: 'yellow'}}/> */}
-        {diary.adjectives.map(adj => <p key={adj} style={styles.adjText}>{adj}</p>)}
-      </div>
+    <div style={styles.container}>
+      {checkedIn ? (
+        <span style={styles.titleText} role="img">
+          👋{" Hello! Thank you for checking in with me! "}😊
+        </span>
+      ) : (
+        <span style={styles.titleText} role="img">
+          {"I have not checked in today. "}🤦‍♀️
+          {"  Please check back later! "}😊
+        </span>
+      )}
+      <table>
+        <tr>
+          <td valign="top">
+            <EntryDescription
+              emoji=" 📅 "
+              checkedIn={checkedIn}
+              trueText="What is the date today? "
+              falseText="The most recent entry is for: "
+            />
+          </td>
+          <td>
+            <p style={styles.entryText}>🍰 {diary.date}</p>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <EntryDescription
+              emoji=" 💬 "
+              checkedIn={checkedIn}
+              trueText="How is my day going? "
+              falseText="Caption of the day: "
+            />
+          </td>
+          <td>
+            <p style={styles.entryText}>🐘 {diary.caption}</p>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <EntryDescription
+              emoji=" 🤔 "
+              checkedIn={checkedIn}
+              trueText="If I were to rate my day: "
+              falseText="Rating of the day: "
+            />
+          </td>
+          <td>
+            <p style={styles.entryText}>🌻 {diary.rating}/10</p>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <EntryDescription
+              emoji=" 🤪 "
+              checkedIn={checkedIn}
+              trueText="How am I feeling? "
+              falseText="Adjectives of the day: "
+            />
+          </td>
+          <td>
+            {diary.adjectives.map((adj) => (
+              <span key={adj} style={styles.adjText}>
+                💠 {adj}
+              </span>
+            ))}
+          </td>
+        </tr>
+      </table>
     </div>
-  </div>
   );
 }
 
 export default App;
-
 
 const container = document.getElementById("app");
 render(<App />, container);
