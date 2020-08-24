@@ -1,6 +1,6 @@
 secrets.py
 node_modules/**
-__pycache__/**
+*.pyc
 .vscode/*
 .env
 yarn-error.log
