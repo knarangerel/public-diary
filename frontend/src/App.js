@@ -19,14 +19,12 @@ const styles = {
     fontSize: 18,
     padding: 15,
     margin: 0,
-    // backgroundColor: "yellow",
   },
   entryText: {
     fontFamily: "sans-serif",
     fontSize: 18,
     padding: 15,
     margin: 0,
-    // backgroundColor: "blue",
     lineHeight: 1,
   },
   adjText: {
@@ -49,7 +47,7 @@ const EntryDescription = ({ emoji, checkedIn, trueText, falseText }) => {
       ) : (
         <p style={styles.descriptionText} role="img">
           {emoji}
-          {trueText}
+          {falseText}
         </p>
       )}
     </>
